@@ -6,7 +6,7 @@ ray 환경에서 custom env/model 구성을 위한 structure 정리를 목적으
 * tf.__version__: 2.0 [tensorflow 2.1 won't work yet]
 * run: $python cartpole_train.py
 
-![rewards history](rewards_history)
+![rewards history](rewards_history.png)
 
 참고: 
 
