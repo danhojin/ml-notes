@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # user added
-.h5
+*.h5
