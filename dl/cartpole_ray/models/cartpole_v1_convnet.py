@@ -39,7 +39,7 @@ class CartPoleV1Convnet(TFModelV2):
         layer_out = tf.keras.layers.Dense(
             num_outputs,
             name='layer_out',
-            activation=None)(layer_flatten)
+            activation='relu')(layer_flatten)
         self.base_model = tf.keras.Model(self.inputs, layer_out)
         self.register_variables(self.base_model.variables)
 
