@@ -8,3 +8,8 @@ dl/mnist_digit_pairs_keras_shared_vision_model.ipynb
 dl/carpole_ray
 
 * ray 환경에서 carpole 컨트롤 정책 수립
+
+dl/acrobot_moutaincar_ray_multidiscrete.py
+
+* gym.spaces.MultiDiscrete action test in the rllib environment
+* only work for vanilla PG for now
