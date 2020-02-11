@@ -8,7 +8,6 @@ dl/mnist_digit_pairs_keras_shared_vision_model.ipynb
 dl/cartpole_gray
 
 * wrapped env to capture gray images
-* so far only works with tensorflow 2.0
 
 dl/cartpoles
 
