@@ -20,6 +20,7 @@ class CartPolesActionDist(ActionDistribution):
         return 6  # 3 envs * 2 discrete actions
 
     def sample(self):
+        """Draw a sample from the action distribution."""
         a_dists = self._actions_distribution()
         a_samples = list(a_dist.sample() for a_dist in a_dists)
         self._action_logp = sum(
@@ -28,13 +29,15 @@ class CartPolesActionDist(ActionDistribution):
         return TupleActions(a_samples)
 
     def sampled_action_logp(self):
-        return tf.math.exp(self._action_logp)
+        """Return the log probability of the last sampled actions."""
+        # return tf.math.exp(self._action_logp)
+        return self._action_logp
 
     def logp(self, actions):
+        """The log-likelihood of the action distribution."""
         a_dists = self._actions_distribution()
         return sum(
-            a_dists[i].logp(actions[:, i])
-            for i in range(3))
+            a_dists[i].logp(actions[:, i]) for i in range(len(a_dists)))
 
     # def kl(self, other):
     #     a_dists = self._actions_distribution()
@@ -50,7 +53,7 @@ class CartPolesActionDist(ActionDistribution):
     #         for a_dist in a_dists)
 
     def _actions_distribution(self):
-        a_dists = list(Categorical(output) for output in self.model.outputs)
+        a_dists = list(Categorical(logit) for logit in self.model.logits)
         return a_dists
 
 
@@ -107,7 +110,7 @@ class CartPolesModel(TFModelV2):
         self.register_variables(self.base_model.variables)
 
     def forward(self, input_dict, state, seq_lens):
-        model_outputs, self._value_out, *self.outputs = self.base_model(
+        model_outputs, self._value_out, *self.logits = self.base_model(
             input_dict['obs'])
         return model_outputs, state
 
@@ -120,6 +123,6 @@ class CartPolesStackedModel(CartPolesModel):
     def forward(self, input_dict, state, seq_lens):
         inputs = [input_dict['obs'][:, j, :] for j in range(
             input_dict['obs'].shape[1])]
-        model_outputs, self._value_out, *self.outputs = self.base_model(
+        model_outputs, self._value_out, *self.logits = self.base_model(
             inputs)
         return model_outputs, state
