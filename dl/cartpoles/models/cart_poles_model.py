@@ -36,18 +36,18 @@ class CartPolesActionDist(ActionDistribution):
             a_dists[i].logp(actions[:, i])
             for i in range(3))
 
-    def kl(self, other):
-        a_dists = self._actions_distribution()
-        o_dists = other._actions_distribution()
-        return sum(
-            a_dist.kl(o_dist)
-            for (a_dist, o_dist) in zip(a_dists, o_dists))
+    # def kl(self, other):
+    #     a_dists = self._actions_distribution()
+    #     o_dists = other._actions_distribution()
+    #     return sum(
+    #         a_dist.kl(o_dist)
+    #         for (a_dist, o_dist) in zip(a_dists, o_dists))
 
-    def entropy(self):
-        a_dists = self._actions_distribution()
-        return sum(
-            a_dist.entropy()
-            for a_dist in a_dists)
+    # def entropy(self):
+    #     a_dists = self._actions_distribution()
+    #     return sum(
+    #         a_dist.entropy()
+    #         for a_dist in a_dists)
 
     def _actions_distribution(self):
         a_dists = list(Categorical(output) for output in self.model.outputs)
@@ -113,3 +113,13 @@ class CartPolesModel(TFModelV2):
 
     def value_function(self):
         return tf.reshape(self._value_out, [-1])
+
+
+class CartPolesStackedModel(CartPolesModel):
+
+    def forward(self, input_dict, state, seq_lens):
+        inputs = [input_dict['obs'][:, j, :] for j in range(
+            input_dict['obs'].shape[1])]
+        model_outputs, self._value_out, *self.outputs = self.base_model(
+            inputs)
+        return model_outputs, state

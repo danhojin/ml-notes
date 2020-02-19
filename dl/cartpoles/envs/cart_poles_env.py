@@ -1,3 +1,5 @@
+import numpy as np
+
 import gym
 from gym import spaces
 
@@ -49,3 +51,22 @@ class CartPolesEnv(gym.Env):
     def close(self):
         for env in self.envs:
             env.close()
+
+
+class CartPolesStackedEnv(gym.ObservationWrapper):
+
+    def __init__(self, config={}):
+        super().__init__(CartPolesEnv(config))
+        self.config = config
+
+        num_cartpoles = len(self.env.observation_space)
+        self.observation_space = spaces.Box(
+            low=np.stack([
+                self.env.observation_space[i].low
+                for i in range(num_cartpoles)]),
+            high=np.stack([
+                self.env.observation_space[i].high
+                for i in range(num_cartpoles)]))
+
+    def observation(self, obs):
+        return np.stack(obs)
