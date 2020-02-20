@@ -16,8 +16,8 @@ class CartPolesActionDist(ActionDistribution):
     only use the sample() method.
     '''
     @staticmethod
-    def required_model_output_shape(self, model_config):
-        return 6  # 3 envs * 2 discrete actions
+    def required_model_output_shape(action_space, model_config):
+        return len(action_space) * action_space[-1].n
 
     def sample(self):
         """Draw a sample from the action distribution."""
