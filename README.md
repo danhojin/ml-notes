@@ -15,3 +15,9 @@ dl/cartpoles
 * use Tuple observation_space, action_space
 * custom model/action distribution project
 * only works great with PG
+
+bayesian/filterpy
+
+* reading the book by Labbe and Roger's "Kalman and Bayesian Filters in Python"
+* git repository at https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python
+* filterpy package at https://github.com/rlabbe/filterpy
