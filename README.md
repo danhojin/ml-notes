@@ -16,7 +16,7 @@ dl/cartpoles
 * custom model/action distribution project
 * only works great with PG
 
-bayesian/filterpy
+hellos/filterpy
 
 * reading the book by Labbe and Roger's "Kalman and Bayesian Filters in Python"
 * git repository at https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python
