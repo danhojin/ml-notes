@@ -3,7 +3,8 @@ from ray.rllib.models.tf.tf_action_dist import (
     ActionDistribution,
     Categorical,
 )
-from ray.rllib.policy.policy import TupleActions
+# from ray.rllib.policy.policy import TupleActions
+from ray.rllib.utils.tuple_actions import TupleActions
 from ray.rllib.utils import try_import_tf
 
 tf = try_import_tf()
@@ -23,6 +24,14 @@ class CartPolesActionDist(ActionDistribution):
         """Draw a sample from the action distribution."""
         a_dists = self._actions_distribution()
         a_samples = list(a_dist.sample() for a_dist in a_dists)
+        self._action_logp = sum(
+            a_dist.logp(a_sample)
+            for (a_dist, a_sample) in zip(a_dists, a_samples))
+        return TupleActions(a_samples)
+
+    def deterministic_sample(self):
+        a_dists = self._actions_distribution()
+        a_samples = list(a_dist.deterministic_sample() for a_dist in a_dists)
         self._action_logp = sum(
             a_dist.logp(a_sample)
             for (a_dist, a_sample) in zip(a_dists, a_samples))
