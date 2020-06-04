@@ -132,4 +132,4 @@ dmypy.json
 *.h5
 *.swp
 data
-catboost-info/
+catboost_info/
