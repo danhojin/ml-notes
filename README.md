@@ -1,23 +1,14 @@
 # ml-notes
 
-dl/mnist_digit_pairs_keras_shared_vision_model.ipynb
+## baselines
 
-* mnist에서 두 sample을 골랐을 때 같은 수인지 아니지 판별
-* colab 환경인 경우 반드시 GPU 사용
+* structured data에 대하여 catboost, autogluon 적용 정리
 
-dl/cartpole_gray
+## hellos
 
-* wrapped env to capture gray images
+* 새로 만난 패키지를 시험
+* 학습 중인 책의 연습 문제 풀이
 
-dl/cartpoles
+## ml
 
-* Three cart poles
-* use Tuple observation_space, action_space
-* custom model/action distribution project
-* only works great with PG
-
-hellos/filterpy
-
-* reading the book by Labbe and Roger's "Kalman and Bayesian Filters in Python"
-* git repository at https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python
-* filterpy package at https://github.com/rlabbe/filterpy
+* 다양한 주제의 기계 학습 및 딥러닝 시도
